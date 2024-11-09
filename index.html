@@ -3,44 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Открытие Кейсов</title>
+    <title>Выберите Бокс</title>
     <!-- Подключаем Telegram Web App JavaScript API -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+            margin: 0;
+        }
+        h1 {
+            color: #333;
+        }
+        .boxes {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            gap: 10px;
+        }
+        .box {
+            width: 100px;
+            height: 100px;
+            background-color: #4CAF50;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: background-color 0.3s;
+        }
+        .box:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
-    <h1>Откройте кейс и выиграйте приз!</h1>
-    <button onclick="openCase()">Открыть кейс</button>
-    <p id="result"></p>
-
-    <!-- Контейнер для отображения логов -->
-    <pre id="log" style="background: #f4f4f4; padding: 10px; border: 1px solid #ddd; max-height: 200px; overflow-y: scroll;"></pre>
+    <h1>Выберите бокс</h1>
+    <div class="boxes">
+        <div class="box" onclick="selectBox()">1</div>
+        <div class="box" onclick="selectBox()">2</div>
+        <div class="box" onclick="selectBox()">3</div>
+        <div class="box" onclick="selectBox()">4</div>
+        <div class="box" onclick="selectBox()">5</div>
+        <div class="box" onclick="selectBox()">6</div>
+        <div class="box" onclick="selectBox()">7</div>
+        <div class="box" onclick="selectBox()">8</div>
+        <div class="box" onclick="selectBox()">9</div>
+    </div>
 
     <script>
-        // Функция для вывода логов на страницу
-        function logMessage(message) {
-            const logContainer = document.getElementById('log');
-            logContainer.textContent += message + "\n";  // Добавляем новое сообщение в контейнер
-            logContainer.scrollTop = logContainer.scrollHeight;  // Автоматическая прокрутка вниз
-        }
+        function selectBox() {
+            // Список возможных выигрышей
+            const prizes = [500, 1000, 5000, 10000, 15000];
+            // Случайный выбор приза
+            const prize = prizes[Math.floor(Math.random() * prizes.length)];
 
-        function openCase() {
-            const prizes = ['Приз 1', 'Приз 2', 'Приз 3', 'Приз 4'];
-            const result = prizes[Math.floor(Math.random() * prizes.length)];
-            document.getElementById('result').innerText = `Ваш выигрыш: ${result}`;
-
-            // Проверка наличия объекта Telegram и отправка данных
+            // Проверка наличия объекта Telegram Web App
             if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
-                logMessage("Отправка данных в бота: " + result);  // Логирование отправки
-                Telegram.WebApp.sendData(result);
+                // Отправка данных обратно в бота и закрытие Web App
+                Telegram.WebApp.sendData(`Ваш выигрыш: ${prize} алмазов`);
+                Telegram.WebApp.close();
             } else {
-                logMessage("WebApp API недоступен. Запустите приложение внутри Telegram.");
+                alert("Запустите приложение внутри Telegram.");
             }
         }
-
-        // Проверка объекта Telegram.WebApp и вывод результата
-        window.addEventListener("DOMContentLoaded", function() {
-            logMessage("Telegram API доступен: " + (typeof Telegram !== 'undefined' && Telegram.WebApp));
-        });
     </script>
 </body>
 </html>
