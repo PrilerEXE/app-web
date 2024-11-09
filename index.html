@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Открытие Кейсов</title>
+    <!-- Подключаем Telegram Web App JavaScript API -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
     <h1>Откройте кейс и выиграйте приз!</h1>
@@ -36,7 +38,9 @@
         }
 
         // Проверка объекта Telegram.WebApp и вывод результата
-        logMessage("Telegram API доступен: " + (typeof Telegram !== 'undefined' && Telegram.WebApp));
+        window.addEventListener("DOMContentLoaded", function() {
+            logMessage("Telegram API доступен: " + (typeof Telegram !== 'undefined' && Telegram.WebApp));
+        });
     </script>
 </body>
 </html>
