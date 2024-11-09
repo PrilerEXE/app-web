@@ -37,8 +37,13 @@
             // Проверка и отправка данных в бота
             if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
                 console.log("Отправка данных в бота:", prize);  // Лог для отладки
-                Telegram.WebApp.sendData(`Ваш выигрыш: ${prize} алмазов`);
-                Telegram.WebApp.close();
+                try {
+                    Telegram.WebApp.sendData(`Ваш выигрыш: ${prize} алмазов`);
+                    console.log("Данные успешно отправлены");  // Подтверждение успешной отправки
+                    Telegram.WebApp.close();
+                } catch (error) {
+                    console.error("Ошибка при отправке данных:", error);
+                }
             } else {
                 alert("Запустите приложение внутри Telegram.");
             }
