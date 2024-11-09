@@ -30,23 +30,28 @@
     </div>
 
     <script>
+        // Проверяем доступность API Telegram
+        if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
+            console.log("Telegram API доступен:", Telegram.WebApp);
+            console.log("initData:", Telegram.WebApp.initData);
+            console.log("initDataUnsafe:", Telegram.WebApp.initDataUnsafe);
+        } else {
+            console.error("Запустите приложение внутри Telegram.");
+        }
+
         function selectBox() {
             const prizes = [500, 1000, 5000, 10000, 15000];
             const prize = prizes[Math.floor(Math.random() * prizes.length)];
             
-            // Проверка и отправка данных в виде JSON
+            // Проверка и отправка данных в бота
             if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
-                const dataToSend = JSON.stringify({ prize: prize });
-                console.log("Отправка данных в бота:", dataToSend);  // Лог для отладки
-                Telegram.WebApp.sendData(dataToSend);  // Отправка данных в формате JSON
-                Telegram.WebApp.close();  // Закрытие Web Viewer
+                console.log("Отправка данных в бота:", prize);  // Лог для отладки
+                Telegram.WebApp.sendData(JSON.stringify({ prize: prize }));
+                Telegram.WebApp.close();  // Закрытие Web App
             } else {
                 alert("Запустите приложение внутри Telegram.");
             }
         }
-
-        // Проверка доступности Telegram API и вывод информации
-        console.log("Telegram API доступен:", typeof Telegram !== 'undefined' && Telegram.WebApp);
     </script>
 </body>
 </html>
