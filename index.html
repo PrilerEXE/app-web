@@ -15,12 +15,36 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            background: url('https://files.vgtimes.ru/posts/2022-06/vyshel-novyy-treyler-rezhima-kataklizm-edinenie-dlya-mobilnoy-igry-garena-free-fire-88901.webp') no-repeat center center fixed; /* Фон */
+            background: url('https://files.vgtimes.ru/posts/2022-06/vyshel-novyy-treyler-rezhima-kataklizm-edinenie-dlya-mobilnoy-igry-garena-free-fire-88901.webp') no-repeat center center fixed;
             background-size: cover;
             margin: 0;
             padding: 0 10px;
             color: #fff;
             text-align: center;
+        }
+
+        /* Прелоадер */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        #preloader img {
+            width: 100px;
+            height: 100px;
+        }
+
+        /* Основной контент скрыт до завершения загрузки */
+        .content {
+            display: none;
         }
 
         h1 {
@@ -68,20 +92,29 @@
     </style>
 </head>
 <body>
-    <h1>Выберите бокс</h1>
-    <div class="boxes">
-        <div class="box" onclick="selectBox()">1</div>
-        <div class="box" onclick="selectBox()">2</div>
-        <div class="box" onclick="selectBox()">3</div>
-        <div class="box" onclick="selectBox()">4</div>
-        <div class="box" onclick="selectBox()">5</div>
-        <div class="box" onclick="selectBox()">6</div>
-        <div class="box" onclick="selectBox()">7</div>
-        <div class="box" onclick="selectBox()">8</div>
-        <div class="box" onclick="selectBox()">9</div>
+    <!-- Прелоадер -->
+    <div id="preloader">
+        <img src="https://ffcis.ru/instafish/authvk/Kelly-GIF__ff.gif" alt="Loading..."> <!-- Замените URL на нужное изображение GIF -->
+    </div>
+
+    <!-- Основной контент страницы -->
+    <div class="content">
+        <h1>Выберите бокс</h1>
+        <div class="boxes">
+            <div class="box" onclick="selectBox()">1</div>
+            <div class="box" onclick="selectBox()">2</div>
+            <div class="box" onclick="selectBox()">3</div>
+            <div class="box" onclick="selectBox()">4</div>
+            <div class="box" onclick="selectBox()">5</div>
+            <div class="box" onclick="selectBox()">6</div>
+            <div class="box" onclick="selectBox()">7</div>
+            <div class="box" onclick="selectBox()">8</div>
+            <div class="box" onclick="selectBox()">9</div>
+        </div>
     </div>
 
     <script>
+        // Функция отображения результата выбора бокса
         function selectBox() {
             const prizes = [500, 1000, 5000, 10000, 15000];
             const prize = prizes[Math.floor(Math.random() * prizes.length)];
@@ -92,6 +125,12 @@
             } else {
                 alert("Запустите приложение внутри Telegram.");
             }
+        }
+
+        // Убираем прелоадер после загрузки страницы
+        window.onload = function() {
+            document.getElementById('preloader').style.display = 'none';
+            document.querySelector('.content').style.display = 'block';
         }
     </script>
 </body>
