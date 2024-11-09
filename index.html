@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Выберите Бокс</title>
+    <title>Открытие Боксов</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/eruda"></script> <!-- Подключение Eruda -->
-    <script>eruda.init();</script> <!-- Инициализация Eruda -->
     <style>
         body { font-family: Arial, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; background-color: #f4f4f4; }
         h1 { color: #333; }
         .boxes { display: grid; grid-template-columns: repeat(3, 100px); gap: 10px; }
         .box { width: 100px; height: 100px; background-color: #4CAF50; color: white; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; border-radius: 10px; transition: background-color 0.3s; }
         .box:hover { background-color: #45a049; }
+        .result { margin-top: 20px; text-align: center; }
+        .button { margin-top: 10px; padding: 10px 20px; background-color: #4CAF50; color: white; border: none; cursor: pointer; border-radius: 5px; }
     </style>
 </head>
 <body>
@@ -29,28 +29,30 @@
         <div class="box" onclick="selectBox()">9</div>
     </div>
 
+    <div class="result" id="result"></div>
+    <button class="button" id="claimButton" style="display: none;" onclick="sendToBot()">Получить награду</button>
+
     <script>
+        let prize;
+
         function selectBox() {
             const prizes = [500, 1000, 5000, 10000, 15000];
-            const prize = prizes[Math.floor(Math.random() * prizes.length)];
+            prize = prizes[Math.floor(Math.random() * prizes.length)];
 
-            // Проверка наличия API Telegram Web App
-            if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
-                console.log("Отправка данных в бота:", prize);
-                try {
-                    Telegram.WebApp.sendData(`Ваш выигрыш: ${prize} алмазов`);
-                    console.log("Данные успешно отправлены");
-                    // Telegram.WebApp.close(); // Закрытие Web Viewer отключено для отладки
-                } catch (error) {
-                    console.error("Ошибка при отправке данных:", error);
-                }
-            } else {
-                console.error("API Telegram Web App недоступен. Проверьте, что Web App открыт внутри Telegram.");
-            }
+            // Генерация ссылки для перехода к боту с параметром
+            const botUsername = "freefire_winbot";
+            const encryptedPrize = btoa(prize.toString());  // Преобразуем выигрыш в Base64 для шифрования
+            const botLink = `tg://resolve?domain=${botUsername}&start=${encryptedPrize}`;
+
+            document.getElementById('result').innerHTML = `Ваш выигрыш: ${prize} алмазов!`;
+            document.getElementById('claimButton').setAttribute("onclick", `openBotLink('${botLink}')`);
+            document.getElementById('claimButton').style.display = 'inline-block';
         }
 
-        // Логирование для подтверждения наличия Telegram WebApp API
-        console.log("Telegram API доступен:", typeof Telegram !== 'undefined' && Telegram.WebApp);
+        function openBotLink(link) {
+            window.location.href = link;
+            Telegram.WebApp.close(); // Закрытие Web Viewer после нажатия кнопки
+        }
     </script>
 </body>
 </html>
