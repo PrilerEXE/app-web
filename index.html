@@ -10,7 +10,17 @@
     <button onclick="openCase()">Открыть кейс</button>
     <p id="result"></p>
 
+    <!-- Контейнер для отображения логов -->
+    <pre id="log" style="background: #f4f4f4; padding: 10px; border: 1px solid #ddd; max-height: 200px; overflow-y: scroll;"></pre>
+
     <script>
+        // Функция для вывода логов на страницу
+        function logMessage(message) {
+            const logContainer = document.getElementById('log');
+            logContainer.textContent += message + "\n";  // Добавляем новое сообщение в контейнер
+            logContainer.scrollTop = logContainer.scrollHeight;  // Автоматическая прокрутка вниз
+        }
+
         function openCase() {
             const prizes = ['Приз 1', 'Приз 2', 'Приз 3', 'Приз 4'];
             const result = prizes[Math.floor(Math.random() * prizes.length)];
@@ -18,17 +28,15 @@
 
             // Проверка наличия объекта Telegram и отправка данных
             if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
-                console.log("Отправка данных в бота:", result); // Логирование отправки
+                logMessage("Отправка данных в бота: " + result);  // Логирование отправки
                 Telegram.WebApp.sendData(result);
             } else {
-                console.log("WebApp API недоступен. Запустите приложение внутри Telegram.");
+                logMessage("WebApp API недоступен. Запустите приложение внутри Telegram.");
             }
         }
 
-        // Проверка объекта Telegram.WebApp
-        console.log("Telegram API доступен:", typeof Telegram !== 'undefined' && Telegram.WebApp);
+        // Проверка объекта Telegram.WebApp и вывод результата
+        logMessage("Telegram API доступен: " + (typeof Telegram !== 'undefined' && Telegram.WebApp));
     </script>
-<script src="https://cdn.jsdelivr.net/npm/eruda"></script>
-<script>eruda.init();</script>
 </body>
 </html>
