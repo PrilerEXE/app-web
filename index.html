@@ -10,20 +10,23 @@
     <button onclick="openCase()">Открыть кейс</button>
     <p id="result"></p>
 
-<script>
-    async function openCase() {
-        const prizes = ['Приз 1', 'Приз 2', 'Приз 3', 'Приз 4'];
-        const result = prizes[Math.floor(Math.random() * prizes.length)];
-        document.getElementById('result').innerText = `Ваш выигрыш: ${result}`;
+    <script>
+        function openCase() {
+            const prizes = ['Приз 1', 'Приз 2', 'Приз 3', 'Приз 4'];
+            const result = prizes[Math.floor(Math.random() * prizes.length)];
+            document.getElementById('result').innerText = `Ваш выигрыш: ${result}`;
 
-        if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
-            console.log("Отправка данных в бота:", result); // Логирование отправки
-            await Telegram.WebApp.sendData(result); // Используем await
-        } else {
-            console.log("WebApp API недоступен. Запустите приложение внутри Telegram.");
+            // Проверка наличия объекта Telegram и отправка данных
+            if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
+                console.log("Отправка данных в бота:", result); // Логирование отправки
+                Telegram.WebApp.sendData(result);
+            } else {
+                console.log("WebApp API недоступен. Запустите приложение внутри Telegram.");
+            }
         }
-    }
-</script>
 
+        // Проверка объекта Telegram.WebApp
+        console.log("Telegram API доступен:", typeof Telegram !== 'undefined' && Telegram.WebApp);
+    </script>
 </body>
 </html>
