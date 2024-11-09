@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Выберите Бокс</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/eruda"></script> <!-- Подключение eruda для отладки на мобильных -->
-    <script>eruda.init();</script> <!-- Инициализация eruda -->
     <style>
         body { font-family: Arial, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; background-color: #f4f4f4; }
         h1 { color: #333; }
@@ -33,22 +31,23 @@
         function selectBox() {
             const prizes = [500, 1000, 5000, 10000, 15000];
             const prize = prizes[Math.floor(Math.random() * prizes.length)];
-            
-            // Проверка и отправка данных в бота
+
+            // Проверка наличия API Telegram Web App
             if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
-                console.log("Отправка данных в бота:", prize);  // Лог для отладки
+                console.log("Отправка данных в бота:", prize);
                 try {
                     Telegram.WebApp.sendData(`Ваш выигрыш: ${prize} алмазов`);
-                    console.log("Данные успешно отправлены");  // Подтверждение успешной отправки
-                    Telegram.WebApp.close();
+                    console.log("Данные успешно отправлены");
+                    // Telegram.WebApp.close(); // Закрытие Web Viewer отключено для отладки
                 } catch (error) {
                     console.error("Ошибка при отправке данных:", error);
                 }
             } else {
-                alert("Запустите приложение внутри Telegram.");
+                console.error("API Telegram Web App недоступен. Проверьте, что Web App открыт внутри Telegram.");
             }
         }
 
+        // Логирование для подтверждения наличия Telegram WebApp API
         console.log("Telegram API доступен:", typeof Telegram !== 'undefined' && Telegram.WebApp);
     </script>
 </body>
