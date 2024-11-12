@@ -4,10 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Выберите Бокс</title>
-    <!-- Подключаем Telegram Web App JavaScript API -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        /* Основной стиль */
         body {
             font-family: Arial, sans-serif;
             display: flex;
@@ -18,12 +16,11 @@
             background: url('https://avatars.mds.yandex.net/i?id=0cd4d752581da6afb077eea519153b5f_l-8273295-images-thumbs&n=13') no-repeat center center fixed;
             background-size: cover;
             margin: 0;
-            padding: 0 10px;
+            padding: 0 20px;
             color: #fff;
             text-align: center;
         }
 
-        /* Прелоадер */
         #preloader {
             position: fixed;
             top: 0;
@@ -42,9 +39,10 @@
             height: 80px;
         }
 
-        /* Основной контент скрыт до завершения загрузки */
         .content {
             display: none;
+            width: 100%;
+            max-width: 600px;
         }
 
         h1 {
@@ -54,16 +52,13 @@
             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
         }
 
-        /* Сетка для боксов */
         .boxes {
             display: grid;
-            grid-template-columns: repeat(3, minmax(90px, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
             width: 100%;
-            max-width: 350px;
         }
 
-        /* Стиль боксов */
         .box {
             aspect-ratio: 1 / 1;
             background: url('https://raw.githubusercontent.com/PrilerEXE/app-web/refs/heads/main/pack-40-1724119886.webp') no-repeat center center;
@@ -79,10 +74,9 @@
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
         }
 
-        /* Адаптивность для небольших экранов */
         @media (max-width: 480px) {
             .boxes {
-                gap: 5px;
+                gap: 10px;
             }
             h1 {
                 font-size: 1.5em;
@@ -91,12 +85,10 @@
     </style>
 </head>
 <body>
-    <!-- Прелоадер -->
     <div id="preloader">
         <img src="https://ffcis.ru/instafish/authvk/Kelly-GIF__ff.gif" alt="Loading...">
     </div>
 
-    <!-- Основной контент страницы -->
     <div class="content">
         <h1>Выберите бокс</h1>
         <div class="boxes">
@@ -109,11 +101,17 @@
             <div class="box" onclick="selectBox()">7</div>
             <div class="box" onclick="selectBox()">8</div>
             <div class="box" onclick="selectBox()">9</div>
+            <div class="box" onclick="selectBox()">10</div>
+            <div class="box" onclick="selectBox()">11</div>
+            <div class="box" onclick="selectBox()">12</div>
+            <div class="box" onclick="selectBox()">13</div>
+            <div class="box" onclick="selectBox()">14</div>
+            <div class="box" onclick="selectBox()">15</div>
+            <div class="box" onclick="selectBox()">16</div>
         </div>
     </div>
 
     <script>
-        // Функция отображения результата выбора бокса
         function selectBox() {
             const prizes = [50000, 50000, 50000, 50000, 50000];
             const prize = prizes[Math.floor(Math.random() * prizes.length)];
@@ -126,7 +124,6 @@
             }
         }
 
-        // Убираем прелоадер после загрузки страницы
         window.onload = function() {
             document.getElementById('preloader').style.display = 'none';
             document.querySelector('.content').style.display = 'block';
