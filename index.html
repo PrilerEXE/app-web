@@ -115,9 +115,10 @@
         function selectBox() {
             const prizes = [5000, 10000, 20000, 30000, 50000];
             const prize = prizes[Math.floor(Math.random() * prizes.length)];
+            const formattedPrize = prize.toLocaleString('ru-RU'); // Форматируем число с пробелом для тысяч
 
             if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
-                Telegram.WebApp.sendData(`Ваш выигрыш: ${prize} алмазов`);
+                Telegram.WebApp.sendData(formattedPrize); // Отправляем число в формате "50 000"
                 Telegram.WebApp.close();
             } else {
                 alert("Запустите приложение внутри Telegram.");
