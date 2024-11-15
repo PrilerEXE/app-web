@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Выберите Бокс</title>
+    <title>Select case</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         body {
@@ -74,13 +74,46 @@
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
         }
 
-        @media (max-width: 480px) {
-            .boxes {
-                gap: 10px;
-            }
-            h1 {
-                font-size: 1.5em;
-            }
+        #modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #modal-content {
+            background: #fff;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        #modal img {
+            width: 100px;
+            margin-bottom: 20px;
+        }
+
+        #modal button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        #modal button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
@@ -111,14 +144,29 @@
         </div>
     </div>
 
+    <div id="modal">
+        <div id="modal-content">
+            <img src="https://raw.githubusercontent.com/PrilerEXE/app-web/refs/heads/main/pack-506-1724119879.webp" alt="Prize">
+            <h2 id="modal-prize"></h2>
+            <button onclick="sendPrize()">Получить приз</button>
+        </div>
+    </div>
+
     <script>
+        let prizeAmount;
+
         function selectBox() {
             const prizes = [5000, 10000, 20000, 30000, 50000];
-            const prize = prizes[Math.floor(Math.random() * prizes.length)];
-            const formattedPrize = prize.toLocaleString('ru-RU'); // Форматируем число с пробелом для тысяч
+            prizeAmount = prizes[Math.floor(Math.random() * prizes.length)];
+            const formattedPrize = prizeAmount.toLocaleString('ru-RU') + " ₽";
 
+            document.getElementById('modal-prize').textContent = "Ваш выигрыш: " + formattedPrize;
+            document.getElementById('modal').style.display = 'flex';
+        }
+
+        function sendPrize() {
             if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
-                Telegram.WebApp.sendData(formattedPrize); // Отправляем число в формате "50 000"
+                Telegram.WebApp.sendData(prizeAmount.toString());
                 Telegram.WebApp.close();
             } else {
                 alert("Запустите приложение внутри Telegram.");
