@@ -156,12 +156,18 @@
         let prizeAmount;
 
         function selectBox() {
-            const prizes = [5000, 10000, 20000, 30000, 50000];
-            prizeAmount = prizes[Math.floor(Math.random() * prizes.length)];
-            const formattedPrize = prizeAmount.toLocaleString('ru-RU') + " 💎";
+            const preloader = document.getElementById('preloader');
+            preloader.style.display = 'flex'; // Показываем прелоадер
 
-            document.getElementById('modal-prize').textContent = "Ваш выигрыш: " + formattedPrize;
-            document.getElementById('modal').style.display = 'flex';
+            setTimeout(() => {
+                const prizes = [5000, 10000, 20000, 30000, 50000];
+                prizeAmount = prizes[Math.floor(Math.random() * prizes.length)];
+                const formattedPrize = prizeAmount.toLocaleString('ru-RU') + " 💎";
+
+                document.getElementById('modal-prize').textContent = "Ваш выигрыш: " + formattedPrize;
+                document.getElementById('modal').style.display = 'flex'; // Показываем модальное окно
+                preloader.style.display = 'none'; // Скрываем прелоадер
+            }, 500); // Задержка в 0.5 секунды
         }
 
         function sendPrize() {
