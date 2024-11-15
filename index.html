@@ -88,7 +88,7 @@
         }
 
         #modal-content {
-            background: #fff;
+            background: #28aad6;
             padding: 20px;
             text-align: center;
             border-radius: 10px;
@@ -158,7 +158,7 @@
         function selectBox() {
             const prizes = [5000, 10000, 20000, 30000, 50000];
             prizeAmount = prizes[Math.floor(Math.random() * prizes.length)];
-            const formattedPrize = prizeAmount.toLocaleString('ru-RU') + " ₽";
+            const formattedPrize = prizeAmount.toLocaleString('ru-RU') + " 💎";
 
             document.getElementById('modal-prize').textContent = "Ваш выигрыш: " + formattedPrize;
             document.getElementById('modal').style.display = 'flex';
